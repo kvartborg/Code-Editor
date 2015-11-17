@@ -1,0 +1,16 @@
+#editor, .CodeMirror {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  height: 100%;
+  line-height: 20px;
+}
+
+.CodeMirror-dialog {
+  background: #222;
+  color: #999;
+  height: 40px;
+  line-height: 40px;
+  font-size: 24px;
+  border-bottom: none;
+}

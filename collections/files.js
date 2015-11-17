@@ -1,0 +1,1 @@
+files = new Mongo.Collection('files');
