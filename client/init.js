@@ -1,3 +1,3 @@
 $(document).ready(function(){
-  ('#sidebar li').removeClass('current');
+  $('#sidebar li').removeClass('current');
 });

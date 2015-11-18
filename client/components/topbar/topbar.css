@@ -3,6 +3,12 @@
   width: 100%;
   height: 40px;
   background: #303030;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 #topbar #tabs {
@@ -13,7 +19,6 @@
   bottom: 0px;  
   color: #888;
   white-space: nowrap;
-  border-left: solid 1px rgba(0,0,0,0.1);
   overflow-x: scroll;
   overflow-y: hidden;
 }
@@ -28,16 +33,19 @@
   border-left: #222;
   padding-left: 14px;
   padding-right: 24px;
-  text-align: left;
+  text-align: center;
   margin: 0px;
   margin-right: -4.5px;
-  border-right: solid 1px rgba(0,0,0,0.1);
   position: relative;
+  transition: opacity .3s;
 }
 
-#topbar #tabs .tab .tab-close { position: absolute; right: 5px; line-height: 40px; font-weight: 100;  }
+#topbar #tabs .tab .tab-close { position: absolute; right: 10px; line-height: 40px; font-weight: 100; opacity: 0;  }
+
+#topbar #tabs .tab:hover > .tab-close { opacity: 1 }
 
 #topbar #tabs .tab.current { 
-  background: rgba(0,0,0,0.2);
+  /*background: rgba(0,0,0,0.2);*/
+  background: #272822;
   color: #fff;
 }

@@ -7,13 +7,14 @@ window.tab = {
         tabs = Session.get('tabs');
 
     for(var i = 0; i < tabs.length; i++){
+      tabs[i].index = i+1;
       if(tabs[i]._id == id){
         // if tab exists
         tabs[i].current = 'current';
         check = true;
 
         editor.setOption('mode', tabs[i].mode);
-        editor.doc.setValue(tabs[i].body);
+        editor.doc.setValue(tabs[i].body);   
       } else {
         tabs[i].current = undefined;
       }
@@ -27,6 +28,8 @@ window.tab = {
     } else {
       Session.set('tabs', tabs);
     }
+
+    //$('#editor textarea').focus();
   },
 
   switch: function(id){
@@ -43,7 +46,9 @@ window.tab = {
     }
 
     Session.set('tabs', tabs);
-    doc.open(t._id, t.filename, t.mode, t.body);
+
+    if(t)
+      doc.open(t._id, t.filename, t.mode, t.body);
   },
 
   close: function(id){

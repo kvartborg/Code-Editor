@@ -22,8 +22,19 @@ window.doc = {
     $('#sidebar li').removeClass('current');
     var file = files.findOne({ '_id': target, project_id: project.current()._id });
 
-    localStorage.doc = JSON.stringify(file);
     $('#sidebar #'+target).addClass('current');
+
+    var tabs = Session.get('tabs');
+
+    for(var i = 0; i < tabs.length; i++){
+      if(doc.current()._id == tabs[i]._id){
+        tabs[i].body = editor.getValue();
+      }
+    }
+
+    Session.set('tabs', tabs);
+    localStorage.doc = JSON.stringify(file);
+
 
     tab.open(file._id, file.name, file.mode, file.body);
   },
@@ -52,8 +63,8 @@ window.doc = {
     });
 
     this.open(id);
-    tab.open(id, filename);
   },
+
 
   save: function(){
     files.update({ _id: doc.current()._id }, {
@@ -89,6 +100,21 @@ window.folder = {
 
   },
 
+};
+
+
+window.sidebar = {
+  hide: function(){
+    if($('#sidebar').hasClass('hidden')){
+      $('#sidebar').removeClass('hidden');
+      $('#editor').velocity({ 'left' : '200px' }, 200);
+      $('#topbar #tabs').velocity({ 'left' : '200px' }, 200);
+    } else {
+      $('#sidebar').addClass('hidden');
+      $('#editor').velocity({ 'left' : '0px' }, 200);
+      $('#topbar #tabs').velocity({ 'left' : '80px' }, 200);
+    }
+  }
 };
 
 

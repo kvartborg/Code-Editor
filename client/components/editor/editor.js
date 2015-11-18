@@ -13,8 +13,9 @@ $(document).ready(function(){
          return false;
       },
       "Cmd-N": function (instance) {
-         $('#add-file').trigger('click');
-         return false;
+        if($('#sidebar').hasClass('hidden')) sidebar.hide();
+        $('#add-file').trigger('click');
+        return false;
       },
       "Cmd-1": function(){
         $('.tab-1').trigger('click');
@@ -51,7 +52,11 @@ $(document).ready(function(){
       "Cmd-9": function(){
         $('.tab-9').trigger('click');
          return false;
-      }
+      },
+      "Cmd-B": function(){
+        sidebar.hide();
+        return false;
+      },
     }
   });
 
