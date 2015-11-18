@@ -1,3 +1,9 @@
 <template name="topbar">
-  <section id="topbar"></section>
+  <section id="topbar">
+    <div id="tabs">
+      {{#each tabs}}
+        <div class="tab tab-{{ index }} {{ current }} {{ save }}" id="{{ _id }}">{{ filename }} <i id="{{ _id }}" class="fa fa-times tab-close"></i></div>
+      {{/each}}
+    </div>
+  </section>
 </template>

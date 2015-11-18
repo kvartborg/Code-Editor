@@ -11,22 +11,26 @@ window.doc = {
     'php' : 'php',
     'txt' : 'text/plain',
     'css' : 'text/css',
+    'md'  : 'text/x-markdown',
+    'json': 'javascript',
+    'sass': 'text/x-sass',
+    'scss': 'text/css',
   },
 
 
   open: function(target){
-    $('.CodeMirror').remove();
     $('#sidebar li').removeClass('current');
     var file = files.findOne({ '_id': target, project_id: project.current()._id });
-    editorOptions.mode = file.mode;
-    var editor = CodeMirror.fromTextArea($('textarea#editor')[0], editorOptions);
-    editor.doc.setValue(file.body);
+
     localStorage.doc = JSON.stringify(file);
-    $('#'+target).addClass('current');
+    $('#sidebar #'+target).addClass('current');
+
+    tab.open(file._id, file.name, file.mode, file.body);
   },
 
 
   create: function(target){
+    $('#sidebar ul li').removeClass('current');
     var filename = $('li.new span').text().replace(/\r?\n|\r/g, '');
     if(filename.split('.').length > 1)
       var ext = filename.split('.')[(filename.split('.').length - 1)];
@@ -36,9 +40,10 @@ window.doc = {
     var id = files.insert({ project_id: project.current()._id, name: filename, mode: this.modes[ext], body: ''});
     $('li.new').removeClass('new').html('<i class="fa fa-file-o"></i>'+filename).attr('id', id);
     
+    $('#sidebar #'+id).addClass('current');
+
     var structure = $('#files').html();
     $('#files').html('');
-
     projects.update(
       { _id: project.current()._id }, 
       { $set: {
@@ -47,10 +52,10 @@ window.doc = {
     });
 
     this.open(id);
+    tab.open(id, filename);
   },
 
   save: function(){
-    var editor = CodeMirror.fromTextArea($('textarea#editor')[0], editorOptions);
     files.update({ _id: doc.current()._id }, {
       $set: {
         body: editor.getValue(),
@@ -60,8 +65,8 @@ window.doc = {
 
 
   delete: function(){
-    var id = $('#sidebar .current').attr('id');
-    $('#'+id).remove();
+    var id = doc.current()._id;
+    $('#sidebar #'+id).remove();
     var structure = $('#files').html();
     $('#files').html('');
     files.remove(id);
@@ -71,6 +76,8 @@ window.doc = {
         structure: structure,
       }
     });
+    editor.doc.setValue('');
+    tab.close(doc.current()._id);
   }
 
 };
